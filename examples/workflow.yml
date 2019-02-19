@@ -1,0 +1,7 @@
+dataset:
+  datapath: data
+model:
+  modelpath: model.py
+train:
+  shuffle: true
+  learn_rate: 0.01

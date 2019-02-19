@@ -36,6 +36,6 @@ setuptools.setup(name='mlworkflow',
                      "Operating System :: OS Independent",
                  ), entry_points='''
                     [console_scripts]
-                    mlworkflow-train=protoseg.cli.train:main
+                    mlworkflow-train=mlworkflow.cli.train:main
                     ''',
                  )

@@ -7,7 +7,10 @@ class Config():
     current = -1
 
     default = {
-        'dataset': {},
+        'dataset': {
+            'datapath':'.',
+            'type':'csv'
+        },
         'model': {},
         'train': {
             'learn_rate': 0.01
