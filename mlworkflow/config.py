@@ -8,11 +8,14 @@ class Config():
 
     default = {
         'dataset': {
-            'datapath':'.',
-            'type':'csv'
+            'datapath': '.',
+            'type': 'csv'
         },
-        'model': {},
+        'model': {
+            'dim_size': 1
+        },
         'train': {
+            'epochs': 2,
             'learn_rate': 0.01
         }
     }

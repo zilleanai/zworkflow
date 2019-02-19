@@ -7,6 +7,7 @@ import sys
 from mlworkflow import Config
 from mlworkflow.dataset import get_dataset
 from mlworkflow.model import get_model
+from mlworkflow.train import get_train
 
 
 def main():
@@ -22,6 +23,9 @@ def main():
     print(dataset)
     model = get_model(config)
     print(model)
+    train = get_train(config)
+    print(train)
+    train.train(dataset, model)
 
     sys.exit(0)
 

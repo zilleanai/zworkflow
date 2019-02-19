@@ -1,7 +1,15 @@
 dataset:
   datapath: data
+  features:
+    - price
+    - ask_price_0
+    - bid_price_0
+  labels:
+    - action
 model:
   modelpath: model.py
+  savepath: model.save
 train:
   shuffle: true
   learn_rate: 0.01
+  epochs: 3
