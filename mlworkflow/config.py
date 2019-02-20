@@ -16,7 +16,11 @@ class Config():
         },
         'train': {
             'epochs': 2,
-            'learn_rate': 0.01
+            'learn_rate': 0.01,
+            'batch_size': 10,
+            'load_model': True,
+            'save_every_epoch': 1,
+            'device': 'cpu'
         }
     }
 
@@ -30,7 +34,9 @@ class Config():
                 self.config = yaml.load(file)
                 self.filename = config
 
-        self.fill_missing(self.config)
+        self.fill_missing(self.config, 'dataset')
+        self.fill_missing(self.config, 'model')
+        self.fill_missing(self.config, 'train')
         self.keys = list(self.config.keys())
 
     def __setitem__(self, key, item):
@@ -56,10 +62,12 @@ class Config():
     def __str__(self):
         return str(self.config)
 
-    def fill_missing(self, config):
-        for key in self.default.keys():
-            if config.get(key) is None:
-                config[key] = self.default[key]
+    def fill_missing(self, config, group):
+        if config.get(group) is None:
+            config[group] = {}
+        for key in self.default[group].keys():
+            if config[group].get(key) is None:
+                config[group][key] = self.default[group][key]
 
     def save(self, path):
         """

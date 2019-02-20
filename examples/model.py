@@ -1,5 +1,6 @@
 import os
 
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -38,8 +39,18 @@ class model(ModelBase):
     def initNet(self):
         self.__net = NeuralNet(len(self.features), len(self.labels))
 
+
     def net(self):
         return self.__net
 
     def __str__(self):
         return str(self.features) + ', ' + str(self.labels)
+
+    def save(self):
+        torch.save(self.__net.state_dict(), self.config['model']['savepath'])
+        print('saved model: ', self.config['model']['savepath'])
+
+    def load(self):
+        if os.path.exists(self.config['model']['savepath']):
+            self.__net.load_state_dict(torch.load(self.config['model']['savepath']))
+            print('loaded model: ', self.config['model']['savepath'])
