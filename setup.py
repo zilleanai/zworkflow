@@ -37,5 +37,6 @@ setuptools.setup(name='mlworkflow',
                  ), entry_points='''
                     [console_scripts]
                     mlworkflow-train=mlworkflow.cli.train:main
+                    mlworkflow-predict=mlworkflow.cli.predict:main
                     ''',
                  )

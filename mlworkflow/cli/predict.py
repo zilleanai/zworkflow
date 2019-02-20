@@ -5,32 +5,27 @@ import os
 import sys
 
 from mlworkflow import Config
-from mlworkflow.dataset import get_dataset
 from mlworkflow.model import get_model
-from mlworkflow.train import get_train
+from mlworkflow.predict import get_predict
 
 
 def main():
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument('--config', help="Path to config file.")
+    parser.add_argument("files",nargs="*")
     parser.add_argument('-v', '--verbose', action='store_true')
-
     args, _ = parser.parse_known_args()
 
     configfile = args.config or {}
     config = Config(configfile)
     config['general']['verbose'] = args.verbose
 
-    dataset = get_dataset(config)
-    if config['general']['verbose']:
-        print(dataset)
     model = get_model(config)
     if config['general']['verbose']:
         print(model)
-    train = get_train(config)
-    if config['general']['verbose']:
-        print(train)
-    train.train(dataset, model)
+
+    predict = get_predict(config)
+    print(predict.predict(args.files, model))
 
     sys.exit(0)
 

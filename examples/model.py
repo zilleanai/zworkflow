@@ -48,9 +48,11 @@ class model(ModelBase):
 
     def save(self):
         torch.save(self.__net.state_dict(), self.config['model']['savepath'])
-        print('saved model: ', self.config['model']['savepath'])
+        if self.config['general']['verbose']:
+            print('saved model: ', self.config['model']['savepath'])
 
     def load(self):
         if os.path.exists(self.config['model']['savepath']):
             self.__net.load_state_dict(torch.load(self.config['model']['savepath']))
-            print('loaded model: ', self.config['model']['savepath'])
+            if self.config['general']['verbose']:
+                print('loaded model: ', self.config['model']['savepath'])

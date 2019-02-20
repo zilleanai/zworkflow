@@ -11,8 +11,8 @@ model:
   savepath: model.save
 train:
   shuffle: true
-  learn_rate: 0.01
-  epochs: 10
-  batch_size: 100
+  learn_rate: 0.001
+  epochs: 100
+  batch_size: 250
   load_model: true
   device: 'cuda:0'

@@ -7,6 +7,9 @@ class Config():
     current = -1
 
     default = {
+        'general':{
+            'verbose': False
+        },
         'dataset': {
             'datapath': '.',
             'type': 'csv'
@@ -34,6 +37,7 @@ class Config():
                 self.config = yaml.load(file)
                 self.filename = config
 
+        self.fill_missing(self.config, 'general')
         self.fill_missing(self.config, 'dataset')
         self.fill_missing(self.config, 'model')
         self.fill_missing(self.config, 'train')
