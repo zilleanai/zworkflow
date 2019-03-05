@@ -1,0 +1,18 @@
+dataset:
+  datapath: traindata
+  features:
+    - price
+    - ask_price_0
+    - bid_price_0
+  labels:
+    - action
+model:
+  modelpath: model.py
+  savepath: model.save
+train:
+  shuffle: true
+  learn_rate: 0.001
+  epochs: 10
+  batch_size: 250
+  load_model: true
+  device: 'cpu'
