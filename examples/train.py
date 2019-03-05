@@ -18,7 +18,8 @@ class train(TrainBase):
         self.device = torch.device(self.config['train']['device'])
         self.criterion = nn.MSELoss().to(self.device)
 
-    def train(self, dataset, model):
+    def train(self, dataset, model, logger=print):
+        logger(dataset)
         net = model.net()
         net.to(self.device)
         if self.config['train']['load_model']:
@@ -31,7 +32,7 @@ class train(TrainBase):
         dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
                                 shuffle=True, num_workers=4)
         for epoch in range(epochs-1):
-            print('epoch: ', epoch)
+            logger('epoch: ', epoch)
             for i, (X, y) in tqdm(enumerate(dataloader)):
                 X = X.view(-1, len(self.config['dataset']['features']))
                 X = X.to(self.device)
@@ -42,7 +43,7 @@ class train(TrainBase):
                 loss.backward()
                 optimizer.step()
                 if (i+1) % 2 == 0:
-                    tqdm.write('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
+                    logger('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
                                .format(epoch+1, epochs, i+1, total_step, loss.item()))
             if epoch % self.config['train']['save_every_epoch'] == 0:
                 model.save()

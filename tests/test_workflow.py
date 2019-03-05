@@ -1,13 +1,12 @@
 import os
 import io
-import numpy as np
 import pytest
 from mlworkflow import Config
 from mlworkflow.dataset import get_dataset
 from mlworkflow.model import get_model
 from mlworkflow.train import get_train
 from mlworkflow.predict import get_predict
-import pandas as pd
+from mlworkflow.label import get_label
 
 def train_logger(project, *args, **kwargs):
     mapped = "".join(map(str, args))
@@ -18,14 +17,9 @@ def test_label():
     os.chdir(os.path.join('tests','res'))
     configfile = os.path.join('workflow.yml') or {}
     config = Config(configfile)
-    datapath = config['dataset']['datapath']
-    files = sorted([f for f in os.listdir(datapath)
-                             if f.endswith('.csv') or f.endswith('.gz')])
+    label = get_label(config)
+    label.label()
     
-    for f in files:
-        df = pd.read_csv(os.path.join(datapath, f))
-        df['action'] = np.log(df['price'] / df['price'].shift(10))
-        df.to_csv(os.path.join(datapath, f), compression='gzip')
     os.chdir(os.path.join('..','..'))
 
 def test_train():

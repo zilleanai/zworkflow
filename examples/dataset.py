@@ -1,4 +1,5 @@
 import os
+import sys
 import numpy as np
 import pandas as pd
 from mlworkflow.dataset import DataSetBase
@@ -21,8 +22,13 @@ class dataset(DataSetBase):
             float_cols = [c for c in df if df[c].dtype == np.float64]
             df[float_cols] = df[float_cols].astype(np.float32)
             df = df.dropna()
+            if not self.labels in df:
+                df[self.labels] = 0.0
+            print(df, file=sys.stderr)
             tables.append(df)
         self.data = pd.concat(tables, axis=0, ignore_index=True)
+        
+        assert self.labels in self.data
         self.data = self.data.reindex()
 
     def __getitem__(self, idx):
