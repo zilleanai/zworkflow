@@ -63,4 +63,4 @@ class predict(PredictBase):
             return csv
 
     def __str__(self):
-        return 'my predict'
+        return 'pp predict'

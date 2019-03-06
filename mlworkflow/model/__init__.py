@@ -6,9 +6,9 @@ from .modelbase import ModelBase
 
 
 def get_model(config):
-    class_name = 'model'
+    class_name = config['model']['model_class']
     spec = importlib.util.spec_from_file_location(
-        class_name, os.path.join('model.py'))
+        class_name, os.path.join(config['model']['model_file']))
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     class_attr = getattr(module, class_name)

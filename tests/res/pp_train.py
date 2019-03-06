@@ -7,6 +7,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
+import pyro
+import pyro.contrib.gp as gp
+from pyro.infer import EmpiricalMarginal, SVI, Trace_ELBO, TracePredictive
+from pyro.optim import Adam
+import pyro.optim as optim
 
 from mlworkflow.train import TrainBase
 
@@ -19,17 +24,20 @@ class train(TrainBase):
         self.criterion = nn.MSELoss().to(self.device)
 
     def train(self, dataset, model, logger=print):
-        net = model.net()
-        net.to(self.device)
+        kernel = model.net()
+        kernel.to(self.device)
         if self.config['train']['load_model']:
             model.load()
-        criterion = torch.nn.MSELoss(size_average=False)
-        optimizer = torch.optim.Adagrad(
-            net.parameters(), lr=self.config['train']['learn_rate'], weight_decay=1e-5)
+        loss_fn = pyro.infer.Trace_ELBO().differentiable_loss
+        
         epochs = self.config['train']['epochs']
         total_step = len(dataset) // self.config['train']['batch_size']
         dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
                                 shuffle=True, num_workers=4)
+
+        optim = Adam({"lr": 0.03})
+        svi = SVI(model.model, model.guide, optim, loss=Trace_ELBO(), num_samples=1000)
+
         for epoch in range(epochs):
             logger('epoch: ', epoch)
             for i, (X, y) in tqdm(enumerate(dataloader)):
@@ -37,18 +45,12 @@ class train(TrainBase):
                 X = X.to(self.device)
                 y = y.to(self.device)
 
-                optimizer.zero_grad()
-                outputs = net(X)
-                loss = criterion(outputs, y)
-                
-                loss.backward()
-                optimizer.step()
+                loss = svi.step(X, y)
                 if (i+1) % 2 == 0:
                     logger('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
-                               .format(epoch+1, epochs, i+1, total_step, loss.item()))
+                               .format(epoch+1, epochs, i+1, total_step, loss/total_step))
             if epoch % self.config['train']['save_every_epoch'] == 0:
                 model.save()
-        model.save()
 
     def __str__(self):
-        return 'my trainer'
+        return 'pp trainer'
