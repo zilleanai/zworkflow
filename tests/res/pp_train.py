@@ -24,8 +24,8 @@ class train(TrainBase):
         self.criterion = nn.MSELoss().to(self.device)
 
     def train(self, dataset, model, logger=print):
-        kernel = model.net()
-        kernel.to(self.device)
+        m = model.model()
+        m.to(self.device)
         if self.config['train']['load_model']:
             model.load()
         loss_fn = pyro.infer.Trace_ELBO().differentiable_loss
@@ -36,7 +36,7 @@ class train(TrainBase):
                                 shuffle=True, num_workers=4)
 
         optim = Adam({"lr": 0.03})
-        svi = SVI(model.model, model.guide, optim, loss=Trace_ELBO(), num_samples=1000)
+        svi = SVI(m.model, m.guide, optim, loss=Trace_ELBO(), num_samples=1000)
 
         for epoch in range(epochs):
             logger('epoch: ', epoch)

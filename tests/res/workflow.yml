@@ -1,6 +1,7 @@
 dataset:
   datapath: traindata
   features:
+    - price
     - ask_price_0
     - bid_price_0
   labels:
@@ -11,7 +12,7 @@ model:
 train:
   train_file: pp_train.py
   shuffle: true
-  learn_rate: 0.001
+  learn_rate: 0.03
   epochs: 1
   batch_size: 2500
   load_model: true

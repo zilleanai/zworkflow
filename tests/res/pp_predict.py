@@ -22,8 +22,8 @@ class predict(PredictBase):
     def predict(self, files, model):
 
         csv = None
-        net = model.net()
-        net.to(self.device)
+        m = model.model()
+        m.to(self.device)
         model.load()
 
         tables = []
