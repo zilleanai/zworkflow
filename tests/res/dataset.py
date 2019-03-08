@@ -6,10 +6,11 @@ from mlworkflow.dataset import DataSetBase
 
 class dataset(DataSetBase):
 
-    def __init__(self, config):
+    def __init__(self, config, preprocessing=None):
         super().__init__(config)
         self.features = config['dataset']['features']
         self.labels = config['dataset']['labels']
+        self.preprocessing = preprocessing
         self.load(config['dataset']['datapath'])
 
     def load(self, datapath='.'):
@@ -20,6 +21,8 @@ class dataset(DataSetBase):
             df = pd.read_csv(os.path.join(datapath, f))
             float_cols = [c for c in df if df[c].dtype == np.float64]
             df[float_cols] = df[float_cols].astype(np.float32)
+            if self.preprocessing:
+                df = self.preprocessing.process(df)
             df = df.dropna()
             for label in self.labels:
                 if not label in df:

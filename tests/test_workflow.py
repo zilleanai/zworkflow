@@ -3,6 +3,7 @@ import io
 import pytest
 from mlworkflow import Config
 from mlworkflow.dataset import get_dataset
+from mlworkflow.preprocessing import get_preprocessing
 from mlworkflow.model import get_model
 from mlworkflow.train import get_train
 from mlworkflow.predict import get_predict
@@ -27,8 +28,8 @@ def test_train():
     configfile = os.path.join('workflow.yml') or {}
     config = Config(configfile)
     config['general']['verbose'] = True
-
-    dataset = get_dataset(config)
+    preprocessing = get_preprocessing(config)
+    dataset = get_dataset(config, preprocessing)
     if config['general']['verbose']:
         print(dataset)
     model = get_model(config)
@@ -51,6 +52,7 @@ def test_predict():
     if config['general']['verbose']:
         print(model)
     files = ['ETH-USDT_2019-02-28T18:00:00_2019-03-01T00:00:00.gz']
-    predict = get_predict(config)
+    preprocessing = get_preprocessing(config)
+    predict = get_predict(config, preprocessing)
     print(predict.predict(files, model))
     os.chdir(os.path.join('..','..'))

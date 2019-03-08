@@ -1,6 +1,6 @@
 
 class DataSetBase():
-    def __init__(self, config):
+    def __init__(self, config, preprocessing=None):
         self.config = config
         self.current = 0
 

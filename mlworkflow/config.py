@@ -14,6 +14,10 @@ class Config():
             'datapath': '.',
             'type': 'csv'
         },
+        'preprocessing': {
+            'preprocessing_class': 'preprocessing',
+            'preprocessing_file': 'preprocessing.py'
+        },
         'model': {
             'model_class': 'model',
             'model_file': 'model.py',
@@ -48,6 +52,7 @@ class Config():
 
         self.fill_missing(self.config, 'general')
         self.fill_missing(self.config, 'dataset')
+        self.fill_missing(self.config, 'preprocessing')
         self.fill_missing(self.config, 'model')
         self.fill_missing(self.config, 'train')
         self.fill_missing(self.config, 'predict')

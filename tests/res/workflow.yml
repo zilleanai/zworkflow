@@ -2,20 +2,21 @@ dataset:
   datapath: traindata
   features:
     - price
+    - move
     - ask_price_0
     - bid_price_0
   labels:
     - action
 model:
-  model_file: pp_model.py
-  savepath: pp_model.save
+  model_file: model.py
+  savepath: model2.save
 train:
-  train_file: pp_train.py
+  train_file: train.py
   shuffle: true
   learn_rate: 0.03
-  epochs: 1
+  epochs: 100
   batch_size: 2500
   load_model: true
-  device: 'cpu'
+  device: "cpu"
 predict:
-  predict_file: pp_predict.py
+  predict_file: predict.py

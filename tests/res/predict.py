@@ -15,8 +15,9 @@ from mlworkflow.predict import PredictBase
 
 class predict(PredictBase):
 
-    def __init__(self, config):
+    def __init__(self, config, preprocessing):
         super().__init__(config)
+        self.preprocessing = preprocessing
         self.device = torch.device(self.config['train']['device'])
 
     def predict(self, files, model):
@@ -38,8 +39,11 @@ class predict(PredictBase):
         else:
             for f in files:
                 df = pd.read_csv(os.path.join(f))
+                
                 float_cols = [c for c in df if df[c].dtype == np.float64]
                 df[float_cols] = df[float_cols].astype(np.float32)
+                if self.preprocessing:
+                    df = self.preprocessing.process(df)
                 df = df.dropna()
                 tables.append(df)
         data = pd.concat(tables, axis=0, ignore_index=True)
