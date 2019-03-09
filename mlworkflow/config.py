@@ -16,7 +16,8 @@ class Config():
         },
         'preprocessing': {
             'preprocessing_class': 'preprocessing',
-            'preprocessing_file': 'preprocessing.py'
+            'preprocessing_file': 'preprocessing.py',
+            'functions': []
         },
         'model': {
             'model_class': 'model',

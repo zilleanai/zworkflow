@@ -7,6 +7,9 @@ dataset:
     - bid_price_0
   labels:
     - action
+preprocessing:
+  functions:
+    - move
 model:
   model_file: model.py
   savepath: model2.save
@@ -14,7 +17,7 @@ train:
   train_file: train.py
   shuffle: true
   learn_rate: 0.03
-  epochs: 100
+  epochs: 2
   batch_size: 2500
   load_model: true
   device: "cpu"
