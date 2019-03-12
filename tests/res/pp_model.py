@@ -17,7 +17,6 @@ from mlworkflow.model import ModelBase
 
 class DNN(nn.Module):
     def __init__(self, input_size, output_size):
-        # p = number of features
         super(DNN, self).__init__()
         self.output_size = output_size
         self.input_size = input_size
@@ -35,7 +34,6 @@ class DNN(nn.Module):
 
 class PPModel(nn.Module):
     def __init__(self, input_size, output_size=1, z_dim=16):
-        # p = number of features
         super(PPModel, self).__init__()
         self.output_size = output_size
         self.input_size = input_size
@@ -53,7 +51,8 @@ class PPModel(nn.Module):
             prior_loc = xs.new_zeros([batch_size, self.z_dim])
             prior_scale = xs.new_ones([batch_size, self.z_dim])
             zs = pyro.sample("z", Normal(prior_loc, prior_scale).to_event(1))
-            alpha_prior = xs.new_ones([batch_size, self.output_size]) / (1.0*self.output_size)
+            alpha_prior = xs.new_ones(
+                [batch_size, self.output_size]) / (1.0*self.output_size)
             ys = pyro.sample("y", Uniform(alpha_prior), obs=ys)
             loc = self.decoder.forward([zs, ys])
             pyro.sample('x', Bernoulli(loc).to_event(1), obs=xs)
@@ -71,7 +70,6 @@ class PPModel(nn.Module):
         alpha = self.encoder_y.forward(xs)
         ys = xs.new_zeros(alpha.size())
         return ys
-
 
 
 class model(ModelBase):

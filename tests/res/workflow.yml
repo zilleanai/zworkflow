@@ -11,10 +11,10 @@ preprocessing:
   functions:
     - move
 model:
-  model_file: model.py
-  savepath: model2.save
+  model_file: bo_model.py
+  savepath: bo_model.save
 train:
-  train_file: train.py
+  train_file: bo_train.py
   shuffle: true
   learn_rate: 0.03
   epochs: 2
@@ -22,4 +22,4 @@ train:
   load_model: true
   device: "cpu"
 predict:
-  predict_file: predict.py
+  predict_file: bo_predict.py
