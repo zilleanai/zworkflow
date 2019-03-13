@@ -21,7 +21,8 @@ model:
     param2: [-10, 10]
     param3: [-5, 5]
 train:
-  train_file: bo_train.py
+  train_class: bayesian_optimization_trainer
+  train_file: train.py
   shuffle: true
   learn_rate: 0.03
   epochs: 2
@@ -29,4 +30,5 @@ train:
   load_model: true
   device: "cpu"
 predict:
-  predict_file: bo_predict.py
+  predict_class: bayesian_optimization_predict
+  predict_file: predict.py

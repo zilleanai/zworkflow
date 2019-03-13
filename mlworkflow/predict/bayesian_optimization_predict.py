@@ -13,12 +13,11 @@ from torch.autograd import Variable
 from mlworkflow.predict import PredictBase
 
 
-class predict(PredictBase):
+class BayesianOptimizationPredict(PredictBase):
 
     def __init__(self, config, preprocessing):
         super().__init__(config)
         self.preprocessing = preprocessing
-        self.device = torch.device(self.config['train']['device'])
 
     def predict(self, files, model):
 
@@ -37,7 +36,7 @@ class predict(PredictBase):
         else:
             for f in files:
                 df = pd.read_csv(os.path.join(f))
-                
+
                 float_cols = [c for c in df if df[c].dtype == np.float64]
                 df[float_cols] = df[float_cols].astype(np.float32)
                 if self.preprocessing:
@@ -50,8 +49,6 @@ class predict(PredictBase):
         X = data[self.config['dataset']['features']].values
 
         y = model.f(X, **model.max['params'])
-        #y = np.squeeze(y)
-        print(y)
         df = pd.DataFrame(
             y, columns=self.config['dataset']['labels'])
         csv = df.to_csv(index=False)
@@ -61,4 +58,4 @@ class predict(PredictBase):
             return csv
 
     def __str__(self):
-        return 'my predict'
+        return 'bayesian_optimization_predict'
