@@ -13,6 +13,13 @@ preprocessing:
 model:
   model_file: bo_model.py
   savepath: bo_model.save
+  params:
+    param1: 1
+    param2: 3
+  param_bounds:
+    param1: [-1, 2]
+    param2: [-10, 10]
+    param3: [-5, 5]
 train:
   train_file: bo_train.py
   shuffle: true

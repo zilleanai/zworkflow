@@ -3,6 +3,7 @@ import importlib.util
 from importlib import import_module
 
 from .modelbase import ModelBase
+from .bayesian_optimization_model import BayesianOptimizationModel
 
 
 def get_model(config):

@@ -10,6 +10,7 @@ from torch.autograd import Variable
 
 from mlworkflow.train import TrainBase
 
+from bayes_opt import BayesianOptimization
 
 class train(TrainBase):
 
@@ -17,17 +18,32 @@ class train(TrainBase):
         super().__init__(config)
 
     def train(self, dataset, model, logger=print):
-        
+
         if self.config['train']['load_model']:
             model.load()
-        
+
         epochs = self.config['train']['epochs']
         total_step = len(dataset) // self.config['train']['batch_size']
         dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
                                 shuffle=True, num_workers=4)
 
         for i, (X, y) in tqdm(enumerate(dataloader)):
-            model.train(X.data.numpy(), y.data.numpy())
+            
+            model.data = X.data.numpy()
+            model.target = y.data.numpy()
+            optimizer = BayesianOptimization(
+                f=model.optimizable,
+                pbounds=model.pbounds,
+                verbose=2,
+                random_state=20,
+            )
+            model.load_logs(optimizer)
+            optimizer.maximize(
+                init_points=10,
+                n_iter=self.config['train']['epochs']
+            )
+            model.res = optimizer.res
+            model.max = optimizer.max
         model.save()
 
     def __str__(self):

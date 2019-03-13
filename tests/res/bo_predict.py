@@ -49,7 +49,7 @@ class predict(PredictBase):
 
         X = data[self.config['dataset']['features']].values
 
-        y = model.predict(X)
+        y = model.f(X, **model.max['params'])
         #y = np.squeeze(y)
         print(y)
         df = pd.DataFrame(
