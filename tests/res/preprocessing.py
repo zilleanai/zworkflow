@@ -17,4 +17,4 @@ class preprocessing(PreprocessingBase):
         return data
 
     def __str__(self):
-        return "preprocessing: " + self.functions.keys()
+        return "preprocessing: " + str(list(self.functions.keys()))

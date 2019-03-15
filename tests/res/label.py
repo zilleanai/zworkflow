@@ -18,7 +18,7 @@ class label(LabelBase):
             logger('label file: ', f)
             df = pd.read_csv(os.path.join(datapath, f))
             df['action'] = np.log(df['price'] / df['price'].shift(10))
-            df.to_csv(os.path.join(datapath, f), compression='gzip')
+            df.to_csv(os.path.join(datapath, f), compression='gzip', index=False)
 
     def __str__(self):
         return 'labeler'

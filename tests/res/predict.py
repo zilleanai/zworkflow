@@ -34,6 +34,8 @@ class predict(PredictBase):
             df = pd.read_csv(f)
             float_cols = [c for c in df if df[c].dtype == np.float64]
             df[float_cols] = df[float_cols].astype(np.float32)
+            if self.preprocessing:
+                df = self.preprocessing.process(df)
             df = df.dropna()
             tables.append(df)
         else:
@@ -56,8 +58,6 @@ class predict(PredictBase):
         with torch.no_grad():
             y = net(X)
             y = y.cpu()
-            #y = np.squeeze(y)
-            print(y)
             df = pd.DataFrame(
                 y.numpy(), columns=self.config['dataset']['labels'])
             csv = df.to_csv(index=False)

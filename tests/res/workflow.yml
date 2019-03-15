@@ -11,8 +11,8 @@ preprocessing:
   functions:
     - move
 model:
-  model_file: bo_model.py
-  savepath: bo_model.save
+  model_file: model.py
+  savepath: model2.save
   params:
     param1: 1
     param2: 3
@@ -21,7 +21,7 @@ model:
     param2: [-10, 10]
     param3: [-5, 5]
 train:
-  train_class: bayesian_optimization_trainer
+#  train_class: bayesian_optimization_trainer
   train_file: train.py
   shuffle: true
   learn_rate: 0.03
@@ -30,5 +30,5 @@ train:
   load_model: true
   device: "cpu"
 predict:
-  predict_class: bayesian_optimization_predict
+#  predict_class: bayesian_optimization_predict
   predict_file: predict.py
