@@ -7,10 +7,12 @@ class Config():
     current = -1
 
     default = {
-        'general':{
+        'general': {
             'verbose': False
         },
         'dataset': {
+            'dataset_class': 'dataset',
+            'dataset_file': 'dataset.py',
             'datapath': '.',
             'type': 'csv'
         },
