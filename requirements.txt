@@ -2,3 +2,5 @@ h5py
 pandas
 pyyaml
 bayesian-optimization
+pyro-ppl
+
