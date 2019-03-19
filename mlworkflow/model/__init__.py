@@ -4,13 +4,17 @@ from importlib import import_module
 
 from .modelbase import ModelBase
 from .bayesian_optimization_model import BayesianOptimizationModel
+from .probabilistic_programming_model import ProbabilisticProgrammingModel
 
 model_classes = {
-    'bayesian_optimization_model': BayesianOptimizationModel
+    'bayesian_optimization_model': BayesianOptimizationModel,
+    'probabilistic_programming_model': ProbabilisticProgrammingModel
 }
+
 
 def available():
     return list(model_classes.keys())
+
 
 def get_model(config):
     class_name = config['model']['model_class']

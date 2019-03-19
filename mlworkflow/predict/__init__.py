@@ -4,10 +4,12 @@ from importlib import import_module
 
 from .predictbase import PredictBase
 from .bayesian_optimization_predict import BayesianOptimizationPredict
+from .probabilistic_programming_predict import ProbabilisticProgrammingPredict
 
 
 predict_classes = {
-    'bayesian_optimization_predict': BayesianOptimizationPredict
+    'bayesian_optimization_predict': BayesianOptimizationPredict,
+    'probabilistic_programming_predict': ProbabilisticProgrammingPredict
 }
 
 

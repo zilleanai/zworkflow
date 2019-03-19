@@ -1,5 +1,5 @@
-bayesian_optimization = {
-    'domain': 'bayesian_optimization',
+probabilistic_programming = {
+    'domain': 'probabilistic_programming',
     'general': {
         'verbose': False
     },
@@ -7,6 +7,8 @@ bayesian_optimization = {
         'dataset_class': 'dataset',
         'dataset_file': 'dataset.py',
         'datapath': '.',
+        'features':[],
+        'labels':[],
         'type': 'csv'
     },
     'preprocessing': {
@@ -15,16 +17,14 @@ bayesian_optimization = {
         'functions': []
     },
     'model': {
-        'model_class': 'bayesian_optimization_model',
-        'model_file': 'model.py',
-        'savepath': 'bayesian_optimization_model.save',
-        'params': {},
-        'param_bounds': {},
+        'model_class': 'probabilistic_programming_model',
+        'model_file': 'probabilistic_programming_model.py',
+        'savepath': 'probabilistic_programming_model.save',
         'dim_size': 1
     },
     'train': {
-        'train_class': 'bayesian_optimization_train',
-        'train_file': 'train.py',
+        'train_class': 'probabilistic_programming_train',
+        'train_file': 'probabilistic_programming_train.py',
         'epochs': 2,
         'learn_rate': 0.01,
         'batch_size': 10,
@@ -33,7 +33,7 @@ bayesian_optimization = {
         'device': 'cpu'
     },
     'predict': {
-        'predict_class': 'bayesian_optimization_predict',
-        'predict_file': 'predict.py'
+        'predict_class': 'probabilistic_programming_predict',
+        'predict_file': 'probabilistic_programming_predict.py'
     }
 }

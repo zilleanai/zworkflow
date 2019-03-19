@@ -4,13 +4,17 @@ from importlib import import_module
 
 from .trainbase import TrainBase
 from .bayesian_optimization_train import BayesianOptimizationTrain
+from .probabilistic_programming_train import ProbabilisticProgrammingTrain
 
 train_classes = {
-    'bayesian_optimization_trainer': BayesianOptimizationTrain
+    'bayesian_optimization_trainer': BayesianOptimizationTrain,
+    'probabilistic_programming_train': ProbabilisticProgrammingTrain
 }
+
 
 def available():
     return list(train_classes.keys())
+
 
 def get_train(config):
     class_name = config['train']['train_class']
