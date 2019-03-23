@@ -1,6 +1,8 @@
-h5py
-pandas
-pyyaml
 bayesian-optimization
+h5py
+opencv-python
+pandas
+Pillow
 pyro-ppl
-
+pyyaml
+tqdm

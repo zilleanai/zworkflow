@@ -5,11 +5,13 @@ from importlib import import_module
 from .predictbase import PredictBase
 from .bayesian_optimization_predict import BayesianOptimizationPredict
 from .probabilistic_programming_predict import ProbabilisticProgrammingPredict
+from .segmentation_predict import SegmentationPredict
 
 
 predict_classes = {
     'bayesian_optimization_predict': BayesianOptimizationPredict,
-    'probabilistic_programming_predict': ProbabilisticProgrammingPredict
+    'probabilistic_programming_predict': ProbabilisticProgrammingPredict,
+    'segmentation_predict': SegmentationPredict
 }
 
 
@@ -28,3 +30,4 @@ def get_predict(config, preprocessing):
     spec.loader.exec_module(module)
     class_attr = getattr(module, class_name)
     return class_attr(config, preprocessing)
+

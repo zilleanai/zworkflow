@@ -3,9 +3,11 @@ import importlib.util
 from importlib import import_module
 
 from .preprocessingbase import PreprocessingBase
+from .segmentation_preprocessing import SegmentationPreprocessing
 
-
-preprocessing_classes = {}
+preprocessing_classes = {
+    'segmentation_preprocessing': SegmentationPreprocessing
+}
 
 
 def available():
@@ -23,3 +25,4 @@ def get_preprocessing(config):
     spec.loader.exec_module(module)
     class_attr = getattr(module, class_name)
     return class_attr(config)
+

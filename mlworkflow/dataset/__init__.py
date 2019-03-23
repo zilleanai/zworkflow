@@ -3,8 +3,11 @@ import importlib.util
 from importlib import import_module
 
 from .datasetbase import DataSetBase
+from .segmentation_dataset import SegmentationDataset
 
-dataset_classes = {}
+dataset_classes = {
+    'segmentation_dataset': SegmentationDataset
+}
 
 
 def available():

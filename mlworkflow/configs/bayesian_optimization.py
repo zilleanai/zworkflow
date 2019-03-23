@@ -18,8 +18,15 @@ bayesian_optimization = {
         'model_class': 'bayesian_optimization_model',
         'model_file': 'model.py',
         'savepath': 'bayesian_optimization_model.save',
-        'params': {},
-        'param_bounds': {},
+        'params': {
+            'param1':1,
+            'param2':3
+        },
+        'param_bounds': {
+            'param1': [-1,2],
+            'param2': [-10,10],
+            'param3': [-5,5]
+        },
         'dim_size': 1
     },
     'train': {

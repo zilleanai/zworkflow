@@ -5,10 +5,12 @@ from importlib import import_module
 from .trainbase import TrainBase
 from .bayesian_optimization_train import BayesianOptimizationTrain
 from .probabilistic_programming_train import ProbabilisticProgrammingTrain
+from .segmentation_train import SegmentationTrain
 
 train_classes = {
     'bayesian_optimization_trainer': BayesianOptimizationTrain,
-    'probabilistic_programming_train': ProbabilisticProgrammingTrain
+    'probabilistic_programming_train': ProbabilisticProgrammingTrain,
+    'segmentation_train': SegmentationTrain
 }
 
 
