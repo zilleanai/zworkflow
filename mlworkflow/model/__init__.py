@@ -4,11 +4,13 @@ from importlib import import_module
 
 from .modelbase import ModelBase
 from .bayesian_optimization_model import BayesianOptimizationModel
+from .csv_model import CSVModel
 from .probabilistic_programming_model import ProbabilisticProgrammingModel
 from .segmentation_model import SegmentationModel
 
 model_classes = {
     'bayesian_optimization_model': BayesianOptimizationModel,
+    'csv_model': CSVModel,
     'probabilistic_programming_model': ProbabilisticProgrammingModel,
     'segmentation_model': SegmentationModel
 }

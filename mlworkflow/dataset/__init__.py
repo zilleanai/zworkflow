@@ -3,9 +3,11 @@ import importlib.util
 from importlib import import_module
 
 from .datasetbase import DataSetBase
+from .csv_dataset import CSVDataset
 from .segmentation_dataset import SegmentationDataset
 
 dataset_classes = {
+    'csv_dataset': CSVDataset,
     'segmentation_dataset': SegmentationDataset
 }
 

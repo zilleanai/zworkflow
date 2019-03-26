@@ -3,9 +3,11 @@ import importlib.util
 from importlib import import_module
 
 from .preprocessingbase import PreprocessingBase
+from .csv_preprocessing import CSVPreprocessing
 from .segmentation_preprocessing import SegmentationPreprocessing
 
 preprocessing_classes = {
+    'csv_preprocessing': CSVPreprocessing,
     'segmentation_preprocessing': SegmentationPreprocessing
 }
 
