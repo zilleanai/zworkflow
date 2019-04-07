@@ -6,6 +6,7 @@ import sys
 
 from zworkflow import Config
 from zworkflow.dataset import get_dataset
+from zworkflow.preprocessing import get_preprocessing
 from zworkflow.model import get_model
 from zworkflow.train import get_train
 
@@ -21,7 +22,8 @@ def main():
     config = Config(configfile)
     config['general']['verbose'] = args.verbose
 
-    dataset = get_dataset(config)
+    preprocessing = get_preprocessing(config)
+    dataset = get_dataset(config, preprocessing)
     if config['general']['verbose']:
         print(dataset)
     model = get_model(config)

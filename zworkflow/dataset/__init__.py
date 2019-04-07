@@ -16,7 +16,7 @@ def available():
     return list(dataset_classes.keys())
 
 
-def get_dataset(config, preprocessing):
+def get_dataset(config, preprocessing=None):
     class_name = config['dataset']['dataset_class']
     dataset_file = config['dataset']['dataset_file']
     if class_name in available():

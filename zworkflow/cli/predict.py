@@ -6,6 +6,7 @@ import sys
 
 from zworkflow import Config
 from zworkflow.model import get_model
+from zworkflow.preprocessing import get_preprocessing
 from zworkflow.predict import get_predict
 
 
@@ -23,8 +24,8 @@ def main():
     model = get_model(config)
     if config['general']['verbose']:
         print(model)
-
-    predict = get_predict(config)
+    preprocessing = get_preprocessing(config)
+    predict = get_predict(config, preprocessing)
     print(predict.predict(args.files, model))
 
     sys.exit(0)
