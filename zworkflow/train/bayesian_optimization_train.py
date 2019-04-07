@@ -3,7 +3,7 @@ from tqdm import tqdm
 from torch.utils.data import DataLoader
 from bayes_opt import BayesianOptimization
 
-from . import TrainBase
+from .trainbase import TrainBase
 
 
 class BayesianOptimizationTrain(TrainBase):

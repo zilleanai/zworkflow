@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from mlworkflow.dataset import DataSetBase
+from zworkflow.dataset import DataSetBase
 
 
 class dataset(DataSetBase):

@@ -3,7 +3,7 @@ import json
 import yaml
 import inspect
 
-from mlworkflow.model import ModelBase
+from .modelbase import ModelBase
 
 
 class BayesianOptimizationModel(ModelBase):

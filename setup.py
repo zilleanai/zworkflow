@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-setuptools.setup(name='mlworkflow',
+setuptools.setup(name='zworkflow',
                  version='0.0.1',
                  description='Framework for configuration machine learning workflow.',
                  long_description=long_description,
@@ -16,7 +16,7 @@ setuptools.setup(name='mlworkflow',
                  license='MIT',
                  author='chriamue',
                  author_email='chriamue@gmail.com',
-                 url="https://gitlab.chriamue.de/mlplatform/mlworkflow.git",
+                 url="https://github.com/zilleanai/zworkflow",
                  install_requires=requirements,
                  extras_require={
                      'visualize': ['pydot>=1.2.4'],
@@ -36,7 +36,7 @@ setuptools.setup(name='mlworkflow',
                      "Operating System :: OS Independent",
                  ), entry_points='''
                     [console_scripts]
-                    mlworkflow-train=mlworkflow.cli.train:main
-                    mlworkflow-predict=mlworkflow.cli.predict:main
+                    zworkflow-train=zworkflow.cli.train:main
+                    zworkflow-predict=zworkflow.cli.predict:main
                     ''',
                  )

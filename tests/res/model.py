@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from mlworkflow.model import ModelBase
+from zworkflow.model import ModelBase
 
 
 class NeuralNet(nn.Module):
@@ -26,7 +26,7 @@ class NeuralNet(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        x = x[:,:, None]
+        x = x[:, :, None]
         out = self.conv1(x)
         out = self.relu(out)
         out = self.conv2(out)
@@ -42,9 +42,6 @@ class NeuralNet(nn.Module):
         out = self.conv5(out)
         out = self.relu(out)
         out = self.conv6(out)
-        #out = self.fc3(out)
-        #out = self.relu(out)
-        #out = self.fc4(out)
         out = torch.squeeze(out)
         return out
 
@@ -67,7 +64,6 @@ class model(ModelBase):
         self.__net = NeuralNet(len(self.features), len(self.labels))
         self.__net.apply(self.__net.init_weights)
 
-
     def net(self):
         return self.__net
 
@@ -81,6 +77,7 @@ class model(ModelBase):
 
     def load(self):
         if os.path.exists(self.config['model']['savepath']):
-            self.__net.load_state_dict(torch.load(self.config['model']['savepath']))
+            self.__net.load_state_dict(torch.load(
+                self.config['model']['savepath']))
             if self.config['general']['verbose']:
                 print('loaded model: ', self.config['model']['savepath'])

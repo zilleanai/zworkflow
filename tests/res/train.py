@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
 
-from mlworkflow.train import TrainBase
+from zworkflow.train import TrainBase
 
 
 class train(TrainBase):

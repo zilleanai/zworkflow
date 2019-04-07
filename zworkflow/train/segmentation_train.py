@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
 
-from mlworkflow.train import TrainBase
+from .trainbase import TrainBase
 
 # source: https://github.com/usuyama/pytorch-unet/blob/master/loss.py
 def dice_loss(input, target):

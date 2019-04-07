@@ -14,7 +14,7 @@ from pyro.distributions import Normal, Uniform, Delta, Bernoulli
 from pyro.contrib.autoguide import AutoDiagonalNormal
 import pyro.distributions as dist
 
-from mlworkflow.model import ModelBase
+from .modelbase import ModelBase
 
 
 class Exp(nn.Module):

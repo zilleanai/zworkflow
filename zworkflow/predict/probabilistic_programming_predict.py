@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
 
-from mlworkflow.predict import PredictBase
+from .predictbase import PredictBase
 
 
 class ProbabilisticProgrammingPredict(PredictBase):

@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from mlworkflow.model import ModelBase
+from .modelbase import ModelBase
 
 # source: https://github.com/usuyama/pytorch-unet/blob/master/pytorch_unet.py
 

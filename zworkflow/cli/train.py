@@ -4,10 +4,10 @@ import argparse
 import os
 import sys
 
-from mlworkflow import Config
-from mlworkflow.dataset import get_dataset
-from mlworkflow.model import get_model
-from mlworkflow.train import get_train
+from zworkflow import Config
+from zworkflow.dataset import get_dataset
+from zworkflow.model import get_model
+from zworkflow.train import get_train
 
 
 def main():

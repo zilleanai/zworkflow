@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from mlworkflow.label import LabelBase
+from zworkflow.label import LabelBase
 
 
 class label(LabelBase):
@@ -18,6 +18,7 @@ class label(LabelBase):
             logger('label file: ', f)
             df = pd.read_csv(os.path.join(datapath, f))
             df['action'] = np.log(df['price'] / df['price'].shift(10))
+            #df['action'] = df['price'].shift(10)
             df.to_csv(os.path.join(datapath, f), compression='gzip', index=False)
 
     def __str__(self):

@@ -1,46 +1,49 @@
+domain: csv
 dataset:
   dataset_file: dataset.py
   datapath: traindata
-  train_images: train
-  train_masks: train_masks
   features:
     - price
-  #  - move
     - ask_price_0
+    - ask_price_1
     - bid_price_0
+    - bid_price_1
+    - ask_quantity_0
+    - ask_quantity_1
+    - bid_quantity_0
+    - bid_quantity_1
+    - high_1m
+    - low_1m
+    - high_1h
+    - low_1h
+    - moving_average10
+    - moving_average50
+    - exponential_moving_average10
+    - exponential_moving_average50
+    - macd
+    - volume_moving_average10
   labels:
     - action
-  width: 224
-  height: 224
-  outwidth: 224
-  outheight: 224
-  classes: 1
 preprocessing:
   preprocessing_file: preprocessing.py
   functions:
-#    - resize
-#    - normalize
-#    - classify
-   - move
+    - moving_average10
+    - moving_average50
+    - exponential_moving_average10
+    - exponential_moving_average50
+    - macd
+    - volume_moving_average10
 model:
-  model_file: pp_model.py
-  savepath: pp_model.save
-  params:
-    param1: 1
-    param2: 3
-  param_bounds:
-    param1: [-1, 2]
-    param2: [-10, 10]
-    param3: [-5, 5]
+  model_class: model
+  model_file: model.py
+  savepath: csv_fin_model.save
 train:
-#  train_class: bayesian_optimization_trainer
-  train_file: pp_train.py
+  train_file: train.py
   shuffle: true
   learn_rate: 0.01
-  epochs: 5
-  batch_size: 500
+  epochs: 2
+  batch_size: 1000
   load_model: true
-  device: "cuda"
+  device: "cpu"
 predict:
-#  predict_class: bayesian_optimization_predict
-  predict_file: pp_predict.py
+  predict_file: predict.py

@@ -4,9 +4,9 @@ import argparse
 import os
 import sys
 
-from mlworkflow import Config
-from mlworkflow.model import get_model
-from mlworkflow.predict import get_predict
+from zworkflow import Config
+from zworkflow.model import get_model
+from zworkflow.predict import get_predict
 
 
 def main():

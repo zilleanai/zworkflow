@@ -13,7 +13,7 @@ from pyro.infer import EmpiricalMarginal, SVI, Trace_ELBO, TracePredictive
 from pyro.optim import Adam
 import pyro.optim as optim
 
-from mlworkflow.train import TrainBase
+from .trainbase import TrainBase
 
 
 class ProbabilisticProgrammingTrain(TrainBase):
