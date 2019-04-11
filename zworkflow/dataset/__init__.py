@@ -4,10 +4,12 @@ from importlib import import_module
 
 from .datasetbase import DataSetBase
 from .csv_dataset import CSVDataset
+from .csv2d_dataset import CSV2DDataset
 from .segmentation_dataset import SegmentationDataset
 
 dataset_classes = {
     'csv_dataset': CSVDataset,
+    'csv2d_dataset': CSV2DDataset,
     'segmentation_dataset': SegmentationDataset
 }
 

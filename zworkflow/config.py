@@ -13,7 +13,7 @@ class Config():
             self.config = config
         else:
             with open(config) as file:
-                self.config = yaml.load(file)
+                self.config = yaml.load(file, Loader=yaml.FullLoader)
                 self.filename = config
         self.default = get_config(self.config.get('domain'))
 

@@ -5,6 +5,7 @@ from importlib import import_module
 from .predictbase import PredictBase
 from .bayesian_optimization_predict import BayesianOptimizationPredict
 from .csv_predict import CSVPredict
+from .csv2d_predict import CSV2DPredict
 from .probabilistic_programming_predict import ProbabilisticProgrammingPredict
 from .segmentation_predict import SegmentationPredict
 
@@ -12,6 +13,7 @@ from .segmentation_predict import SegmentationPredict
 predict_classes = {
     'bayesian_optimization_predict': BayesianOptimizationPredict,
     'csv_predict': CSVPredict,
+    'csv2d_predict': CSV2DPredict,
     'probabilistic_programming_predict': ProbabilisticProgrammingPredict,
     'segmentation_predict': SegmentationPredict
 }

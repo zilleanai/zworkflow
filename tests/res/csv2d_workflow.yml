@@ -1,0 +1,54 @@
+domain: csv
+dataset:
+  dataset_class: csv2d_dataset
+  dataset_file: dataset.py
+  datapath: traindata
+  window: 16
+  features:
+    - price
+    - ask_price_0
+    - ask_price_1
+    - bid_price_0
+    - bid_price_1
+    - ask_quantity_0
+    - ask_quantity_1
+    - bid_quantity_0
+    - bid_quantity_1
+    - high_1m
+    - low_1m
+    - high_1h
+    - low_1h
+    - moving_average10
+    - moving_average50
+    - exponential_moving_average10
+    - exponential_moving_average50
+    - macd
+    - volume_moving_average10
+  labels:
+    - action
+preprocessing:
+  preprocessing_file: preprocessing.py
+  functions:
+    - moving_average10
+    - moving_average50
+    - exponential_moving_average10
+    - exponential_moving_average50
+    - macd
+    - volume_moving_average10
+model:
+  model_class: csv2d_model
+  model_file: model.py
+  savepath: csv2d_fin_model.save
+train:
+  train_class: csv2d_train
+  train_file: train.py
+  shuffle: true
+  learn_rate: 0.01
+  epochs: 2
+  batch_size: 100
+  load_model: true
+  device: "cpu"
+predict:
+  predict_class: csv2d_predict
+  predict_file: predict.py
+  device: "cpu"
