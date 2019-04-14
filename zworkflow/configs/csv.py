@@ -34,5 +34,9 @@ csv = {
     'predict': {
         'predict_class': 'csv_predict',
         'predict_file': 'predict.py'
+    },
+    'label': {
+        'label_class': 'label',
+        'label_file': 'label.py'
     }
 }

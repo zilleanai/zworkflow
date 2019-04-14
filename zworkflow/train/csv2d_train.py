@@ -43,7 +43,7 @@ class CSV2DTrain(TrainBase):
                 loss.backward()
                 optimizer.step()
                 if (i+1) % 2 == 0:
-                    logger('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
+                    logger('Epoch [{}/{}], Step [{}/{}], Loss: {:.6f}'
                            .format(epoch+1, epochs, i+1, total_step, loss.item()))
             if epoch % self.config['train']['save_every_epoch'] == 0:
                 model.save()

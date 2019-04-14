@@ -42,5 +42,9 @@ bayesian_optimization = {
     'predict': {
         'predict_class': 'bayesian_optimization_predict',
         'predict_file': 'predict.py'
+    },
+    'label': {
+        'label_class': 'label',
+        'label_file': 'label.py'
     }
 }

@@ -33,7 +33,7 @@ class CSVDataset(DataSetBase):
         self.data = self.data.reindex()
 
     def __getitem__(self, idx):
-        return self.data[self.features].loc[idx].values, self.data[self.labels].loc[idx].astype(np.float32).values
+        return self.data[self.features].loc[idx].astype(np.float32).values, self.data[self.labels].loc[idx].astype(np.float32).values
 
     def __len__(self):
         return len(self.data)

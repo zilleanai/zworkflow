@@ -35,5 +35,9 @@ probabilistic_programming = {
     'predict': {
         'predict_class': 'probabilistic_programming_predict',
         'predict_file': 'probabilistic_programming_predict.py'
+    },
+    'label': {
+        'label_class': 'label',
+        'label_file': 'label.py'
     }
 }

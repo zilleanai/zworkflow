@@ -23,6 +23,7 @@ class Config():
         self.fill_missing(self.config, 'model')
         self.fill_missing(self.config, 'train')
         self.fill_missing(self.config, 'predict')
+        self.fill_missing(self.config, 'label')
         self.keys = list(self.config.keys())
 
     def __setitem__(self, key, item):

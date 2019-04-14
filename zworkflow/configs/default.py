@@ -34,5 +34,9 @@ default = {
     'predict': {
         'predict_class': 'predict',
         'predict_file': 'predict.py'
+    },
+    'label': {
+        'label_class': 'label',
+        'label_file': 'label.py'
     }
 }
