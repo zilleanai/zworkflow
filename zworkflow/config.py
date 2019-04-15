@@ -24,6 +24,7 @@ class Config():
         self.fill_missing(self.config, 'train')
         self.fill_missing(self.config, 'predict')
         self.fill_missing(self.config, 'label')
+        self.fill_missing(self.config, 'evaluate')
         self.keys = list(self.config.keys())
 
     def __setitem__(self, key, item):

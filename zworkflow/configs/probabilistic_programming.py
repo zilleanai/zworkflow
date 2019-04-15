@@ -39,5 +39,9 @@ probabilistic_programming = {
     'label': {
         'label_class': 'label',
         'label_file': 'label.py'
+    },
+    'evaluate': {
+        'evaluate_class': 'evaluate',
+        'evaluate_file': 'evaluate.py'
     }
 }
