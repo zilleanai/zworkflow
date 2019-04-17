@@ -7,7 +7,7 @@ from .datasetbase import DataSetBase
 
 class SegmentationDataset(DataSetBase):
 
-    def __init__(self, config, preprocessing=None):
+    def __init__(self, config, preprocessing=None, data=None):
         super().__init__(config)
         self.features = config['dataset']['features']
         self.labels = config['dataset']['labels']

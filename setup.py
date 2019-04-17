@@ -36,7 +36,9 @@ setuptools.setup(name='zworkflow',
                      "Operating System :: OS Independent",
                  ), entry_points='''
                     [console_scripts]
-                    zworkflow-train=zworkflow.cli.train:main
+                    zworkflow-label=zworkflow.cli.label:main
+                    zworkflow-evaluate=zworkflow.cli.evaluate:main
                     zworkflow-predict=zworkflow.cli.predict:main
+                    zworkflow-train=zworkflow.cli.train:main
                     ''',
                  )

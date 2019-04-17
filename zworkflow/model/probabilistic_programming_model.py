@@ -302,9 +302,8 @@ class PPModel(nn.Module):
             loc, scale = self.encoder_z.forward([xs, ys])
             pyro.sample("z", dist.Normal(loc, scale).to_event(1))
 
-    def predict(self, xs):
+    def forward(self, xs):
         alpha = self.encoder_y.forward(xs)
-        print(alpha)
         ys = alpha
         return ys
 

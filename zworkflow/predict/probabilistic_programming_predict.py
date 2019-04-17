@@ -15,55 +15,29 @@ from .predictbase import PredictBase
 
 class ProbabilisticProgrammingPredict(PredictBase):
 
-    def __init__(self, config, preprocessing):
+    def __init__(self, config):
         super().__init__(config)
-        self.preprocessing = preprocessing
         self.device = torch.device(self.config['train']['device'])
 
-    def predict(self, files, model):
+    def predict(self, dataset, model):
 
         csv = None
         m = model.model()
         m.to(self.device)
         model.load()
 
-        tables = []
-        if type(files) is bytes:
-            f = io.BytesIO(files)
-            f.seek(0)
-            df = pd.read_csv(f)
-            float_cols = [c for c in df if df[c].dtype == np.float64]
-            df[float_cols] = df[float_cols].astype(np.float32)
-            if self.preprocessing:
-                df = self.preprocessing.process(df)
-            df = df.dropna()
-            tables.append(df)
-        else:
-            for f in files:
-                df = pd.read_csv(os.path.join(f))
-                float_cols = [c for c in df if df[c].dtype == np.float64]
-                df[float_cols] = df[float_cols].astype(np.float32)
-                if self.preprocessing:
-                    df = self.preprocessing.process(df)
-                df = df.dropna()
-                tables.append(df)
-        data = pd.concat(tables, axis=0, ignore_index=True)
-        data = data.reindex()
+        dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
+                shuffle=False, num_workers=4)
 
-        X = data[self.config['dataset']['features']].values
-        X = torch.from_numpy(X)
-        X = X.to(self.device)
-
+        predicted = []
         with torch.no_grad():
-            y = model.model().predict(X)
-            y = y.cpu()
-            df = pd.DataFrame(
-                y.numpy(), columns=self.config['dataset']['labels'])
-            csv = df.to_csv(index=False)
-        if type(files) is bytes:
-            return csv.encode()
-        else:
-            return csv
+            for _, (X, y) in enumerate(dataloader):
+                y = m(X).cpu().numpy()
+                predicted.extend(y)
+        df = pd.DataFrame(
+            np.array(predicted), columns=self.config['dataset']['labels'])
+        csv = df.to_csv(index=False)
+        return csv.encode()
 
     def __str__(self):
         return 'pp predict'

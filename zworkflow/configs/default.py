@@ -18,7 +18,7 @@ default = {
     'model': {
         'model_class': 'model',
         'model_file': 'model.py',
-        'savepath': 'pp_model.save',
+        'savepath': 'model.save',
         'dim_size': 1
     },
     'train': {

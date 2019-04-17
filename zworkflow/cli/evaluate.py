@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import select
 import sys
 
 from zworkflow import Config
@@ -18,13 +19,16 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true')
 
     args, _ = parser.parse_known_args()
+    data = None
+    if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
+        data = sys.stdin.buffer.read()
 
     configfile = args.config or {}
     config = Config(configfile)
     config['general']['verbose'] = args.verbose
 
     preprocessing = get_preprocessing(config)
-    dataset = get_dataset(config, preprocessing)
+    dataset = get_dataset(config, preprocessing, data=data or args.files)
     if config['general']['verbose']:
         print(dataset)
     model = get_model(config)

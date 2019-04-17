@@ -16,43 +16,32 @@ from .predictbase import PredictBase
 
 class SegmentationPredict(PredictBase):
 
-    def __init__(self, config, preprocessing):
+    def __init__(self, config):
         super().__init__(config)
-        self.preprocessing = preprocessing
         self.device = torch.device(self.config['train']['device'])
 
-    def predict(self, files, model):
+    def predict(self, dataset, model):
 
         csv = None
         net = model.net()
         net.to(self.device)
         model.load()
-        if type(files) is bytes:
-            f = io.BytesIO(files)
-            f.seek(0)
-            image = Image.open(f)
-        else:
-            image = Image.open(files)
-        image = image.convert('RGB')
-        image = np.array(image)
-        image = cv2.resize(
-            image, (self.config['dataset']['height'],self.config['dataset']['width']))
-        image = np.rollaxis(image, 2, 0)
-        image = image.astype(np.float32)
-        X = np.expand_dims(image, axis=0)
-        X = torch.from_numpy(X)
-        X = X.to(self.device)
+        dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
+                shuffle=False, num_workers=4)
+
+        predicted = []
         with torch.no_grad():
-            y = net(X)
-            y = y.cpu()
-        im = y.numpy()
-        im = im * 255
-        im = im.astype(np.uint8)[0]
-        im = np.squeeze(im)
-        im = Image.fromarray(im)
-        img_io = io.BytesIO()
-        im.save(img_io, format='PNG')
-        return img_io.getvalue()
+            for _, (X, y) in enumerate(dataloader):
+                y = net(X).cpu().numpy()
+                im = predicted[0]
+                im = im * 255
+                im = im.astype(np.uint8)[0]
+                im = np.squeeze(im)
+                im = Image.fromarray(im)
+                img_io = io.BytesIO()
+                im.save(img_io, format='PNG')
+                predicted.append(y)
+        return predicted[0].getvalue()
 
     def __str__(self):
         return 'segmentation predict'
