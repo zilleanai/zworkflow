@@ -7,4 +7,5 @@ pyro-ppl
 pyyaml
 tqdm
 matplotlib
+tensorboardX
 
