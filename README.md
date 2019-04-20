@@ -11,3 +11,6 @@ zworkflow-train --config workflow.yml
 zworkflow-predict --config workflow.yml data.csv
 ```
 
+## Structure
+
+![workflow](docs/workflow.png)

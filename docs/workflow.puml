@@ -1,0 +1,35 @@
+@startuml workflow
+'left to right direction
+object dataset
+object label
+object evaluate
+
+object model
+object preprocessing
+object train
+object predict
+
+object config
+
+config o.down- dataset
+config o- label
+config o- evaluate
+config o.down- model
+config o.down- preprocessing
+config o- train
+config o- predict
+
+dataset .right. preprocessing
+evaluate o. dataset
+evaluate o. model
+train o.up. dataset
+train o.up. model
+predict o. dataset
+predict o. model
+
+label -[hidden]right- train
+model -[hidden]left- dataset
+model -[hidden]down- label
+train -[hidden]right- predict
+predict -[hidden]right- evaluate
+@enduml
