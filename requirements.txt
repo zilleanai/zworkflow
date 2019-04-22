@@ -8,4 +8,4 @@ pyyaml
 tqdm
 matplotlib
 tensorboardX
-
+xgboost

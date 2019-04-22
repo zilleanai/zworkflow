@@ -1,0 +1,44 @@
+dataset:
+  dataset_file: dataset.py
+  datapath: data
+  window: 7
+  features:
+    - Open
+    - High
+    - Low
+    - Close
+    - Volume
+    - Tweets
+    - 'Market_Cap'
+  labels:
+    - action
+preprocessing:
+  preprocessing_file: preprocessing.py
+  functions:
+   - pct_change
+model:
+  model_file: model.py
+  savepath: model.save
+  nthread: 4
+train:
+  train_file: train.py
+  shuffle: true
+  learn_rate: 0.0005
+  epochs: 10000
+  load_model: true
+  save_every_epoch: 100
+  device: "cuda"
+  tensorboard: 'tb'
+  param:
+    max_depth: 10
+    eta: 1
+    silent: 1
+    nthread: 4
+predict:
+  predict_class: predict
+  predict_file: predict.py
+label:
+  label_file: label.py
+  forecast: 1
+evaluate:
+  evaluate_file: evaluate.py
