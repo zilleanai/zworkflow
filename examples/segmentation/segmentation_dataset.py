@@ -26,6 +26,8 @@ class dataset(DataSetBase):
                 self.images = [filename]
             elif type(data) is list:
                 self.images = data
+            else:
+                self.images = []
         else:
             self.images = sorted([os.path.join(images,f) for f in os.listdir(images)
                                 if f.endswith('.png') or f.endswith('.tif') or f.endswith('.jpg')])

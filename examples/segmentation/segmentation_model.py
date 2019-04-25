@@ -78,7 +78,11 @@ class model(ModelBase):
 
     def load(self):
         if os.path.exists(self.config['model']['savepath']):
-            self.__net.load_state_dict(torch.load(
-                self.config['model']['savepath']))
+            if self.config['train']['device'] == 'cpu':
+                self.__net.load_state_dict(torch.load(
+                    self.config['model']['savepath'], map_location='cpu'))
+            else:
+                self.__net.load_state_dict(torch.load(
+                    self.config['model']['savepath']))
             if self.config['general']['verbose']:
                 print('loaded model: ', self.config['model']['savepath'])

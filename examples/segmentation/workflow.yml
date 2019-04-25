@@ -33,7 +33,7 @@ train:
   load_model: true
   save_every_epoch: 1
   tensorboard: tb
-  device: 'cuda'
+  device: 'cpu'
 predict:
   predict_class: predict
   predict_file: segmentation_predict.py
