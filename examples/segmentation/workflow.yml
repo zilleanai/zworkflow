@@ -1,0 +1,38 @@
+domain: 'segmentation'
+general:
+  verbose: false
+dataset:
+  dataset_class: dataset
+  dataset_file: segmentation_dataset.py
+  train_images: train
+  train_masks: train_masks
+  width: 224
+  height: 224
+  outwidth: 224
+  outheight: 224
+  classes: 1
+preprocessing:
+  preprocessing_class: preprocessing
+  preprocessing_file: segmentation_preprocessing.py
+  functions:
+   - resize
+   - normalize
+   - classify_mask
+model:
+  model_class: model
+  model_file: segmentation_model.py
+  savepath: segmentation_model.save
+  dim_size: 3
+train:
+  train_class: train
+  train_file: segmentation_train.py
+  shuffle: true
+  learn_rate: 0.01
+  epochs: 20
+  batch_size: 4
+  load_model: true
+  save_every_epoch: 1
+  device: 'cuda'
+predict:
+  predict_class: predict
+  predict_file: segmentation_predict.py
