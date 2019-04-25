@@ -1,3 +1,5 @@
 train/
 train_masks/
+tb/
 out.png
+dice.png

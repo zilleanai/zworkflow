@@ -32,7 +32,11 @@ train:
   batch_size: 4
   load_model: true
   save_every_epoch: 1
+  tensorboard: tb
   device: 'cuda'
 predict:
   predict_class: predict
   predict_file: segmentation_predict.py
+evaluate:
+  evaluate_class: evaluate
+  evaluate_file: segmentation_evaluate.py
