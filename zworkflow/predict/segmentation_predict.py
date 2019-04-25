@@ -21,26 +21,26 @@ class SegmentationPredict(PredictBase):
         self.device = torch.device(self.config['train']['device'])
 
     def predict(self, dataset, model):
-
-        csv = None
         net = model.net()
         net.to(self.device)
         model.load()
-        dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
+        net.eval()
+        dataloader = DataLoader(dataset, batch_size=1,
                 shuffle=False, num_workers=4)
 
         predicted = []
         with torch.no_grad():
-            for _, (X, y) in enumerate(dataloader):
+            for _, X in enumerate(dataloader):
+                X = X.to(self.device)
                 y = net(X).cpu().numpy()
-                im = predicted[0]
+                im = y
                 im = im * 255
                 im = im.astype(np.uint8)[0]
                 im = np.squeeze(im)
                 im = Image.fromarray(im)
                 img_io = io.BytesIO()
                 im.save(img_io, format='PNG')
-                predicted.append(y)
+                predicted.append(img_io)
         return predicted[0].getvalue()
 
     def __str__(self):

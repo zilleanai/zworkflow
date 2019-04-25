@@ -25,11 +25,11 @@ def dice_loss(input, target):
 
 class SegmentationTrain(TrainBase):
 
+
     def __init__(self, config):
         super().__init__(config)
         self.device = torch.device(self.config['train']['device'])
-        print(self.device)
-        self.criterion = nn.MSELoss().to(self.device)
+        self.criterion = dice_loss or nn.CrossEntropyLoss().to(self.device)
         self.writer = SummaryWriter(self.config['train'].get(
             'tensorboard')) if self.config['train'].get('tensorboard') else None
 
@@ -38,30 +38,36 @@ class SegmentationTrain(TrainBase):
         net.to(self.device)
         if self.config['train']['load_model']:
             model.load()
-        criterion = dice_loss
         optimizer = torch.optim.Adagrad(
             net.parameters(), lr=self.config['train']['learn_rate'], weight_decay=1e-5)
         epochs = self.config['train']['epochs']
-        total_step = len(dataset) // self.config['train']['batch_size']
+        N = len(dataset)
+        total_step = N // self.config['train']['batch_size']
         dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
                                 shuffle=True, num_workers=4)
         n_iter = 0
         for epoch in range(epochs):
             logger('epoch: ', epoch)
-            for i, (X, y) in tqdm(enumerate(dataloader)):
+            epoch_loss = 0.0
+            t = tqdm(enumerate(dataloader))
+            for i, (X, y) in t:
                 
                 X = X.to(self.device)
                 y = y.to(self.device)
 
                 optimizer.zero_grad()
                 outputs = net(X)
-                loss = criterion(outputs, y)
-
+                loss = self.criterion(outputs, y)
+                epoch_loss += loss.item()
                 loss.backward()
                 optimizer.step()
                 if (i+1) % 2 == 0:
-                    logger('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
-                           .format(epoch+1, epochs, i+1, total_step, loss.item()))
+                    message = ('Epoch [{}/{}], Step [{}/{}], AvgLoss: {:.4f}'
+                           .format(epoch+1, epochs, i+1, total_step, epoch_loss/N))
+                    if self.config['general']['verbose']:
+                        logger(message)
+                    else:
+                        t.set_description(message)
                     if self.writer: self.writer.add_scalar('data/loss', loss.item(), n_iter)
                     n_iter += 1
             if epoch % self.config['train']['save_every_epoch'] == 0:
@@ -71,3 +77,4 @@ class SegmentationTrain(TrainBase):
 
     def __str__(self):
         return 'segmentation trainer'
+

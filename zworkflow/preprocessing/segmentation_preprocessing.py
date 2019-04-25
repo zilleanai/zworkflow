@@ -14,20 +14,25 @@ class SegmentationPreprocessing(PreprocessingBase):
         self.height = self.config['dataset']['height']
 
     def normalize(self, data):
-        return data
+        # source: https://pytorch.org/docs/stable/torchvision/models.html
+        (img, mask) = data
+        normed_img = ((img - [0.485, 0.456, 0.406]) / [0.229, 0.224, 0.225])
+        return (normed_img, mask)
 
     def resize(self, data):
         (img, mask) = data
         img = cv2.resize(
             img, (self.height, self.width))
         if mask is None:
-            return img
+            return (img, None)
         mask = cv2.resize(
             mask, (self.height, self.width), interpolation=cv2.INTER_NEAREST)
         return (img, mask)
 
     def classify_mask(self, data):
         (img, mask) = data
+        if mask is None:
+            return data
         mask[mask != 255] = 0
         mask[mask == 255] = 1
         return (img, mask)
@@ -40,3 +45,4 @@ class SegmentationPreprocessing(PreprocessingBase):
 
     def __str__(self):
         return "segmentation preprocessing: " + str(list(self.functions.keys()))
+
