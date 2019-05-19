@@ -18,6 +18,8 @@ class CSV2DTrain(TrainBase):
         super().__init__(config)
         self.device = torch.device(self.config['train']['device'])
         self.criterion = nn.MSELoss().to(self.device)
+        self.writer = SummaryWriter(self.config['train'].get(
+            'tensorboard')) if self.config['train'].get('tensorboard') else None
 
     def train(self, dataset, model, logger=print):
         net = model.net()
