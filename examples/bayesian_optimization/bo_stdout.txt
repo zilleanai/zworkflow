@@ -1,0 +1,126 @@
+$ cat bo_model.py 
+import os
+import json
+import yaml
+import inspect
+
+from zworkflow.model import BayesianOptimizationModel
+
+class model(BayesianOptimizationModel):
+
+
+    def __init__(self, config):
+        super().__init__(config)
+
+    def f(self, data, param1=1, param2=2, param3=5.1):
+        return data[:, 0] * param1 - data[:, 1] * param2 + data[:, 1] * param3
+
+    def optimizable(self, param1, param2, param3):
+        f = self.f(self.data, param1, param2, param3)
+        diff = (f - self.target[:, 0])**2
+        return 1-diff.mean()
+$ cat bo_workflow.yml 
+domain: bayesian_optimization
+dataset:
+  datapath: traindata
+  features:
+    - price
+    - move
+    - ask_price_0
+    - bid_price_0
+  labels:
+    - action
+preprocessing:
+  functions:
+    - move
+model:
+  model_class: model
+  model_file: bo_model.py
+  savepath: bo_model.save
+  params:
+    param1: 1
+    param2: 3
+  param_bounds:
+    param1: [-1, 2]
+    param2: [-10, 10]
+    param3: [-5, 5]
+train:
+  shuffle: true
+  learn_rate: 0.03
+  epochs: 2
+  batch_size: 2500
+  load_model: true
+  device: "cpu"
+
+$ zworkflow-train --config bo_workflow.yml --verbose
+csv_dataset, features: ['price', 'move', 'ask_price_0', 'bid_price_0'] labels: ['action'] rows: 3881['ETH-USDT_2018-11-26T18:00:00_2018-11-27T00:00:00.gz']
+bayesian optimization: ['price', 'move', 'ask_price_0', 'bid_price_0'], ['action']
+bayesian_optimization_trainer
+  0%|                                                     | 0/2 [00:00<?, ?it/s]|   iter    |  target   |  param1   |  param2   |  param3   |
+-------------------------------------------------------------
+|  1        | -7.078e+0 |  0.7644   |  7.954    |  3.915    |
+|  2        | -2.538e+0 |  1.448    | -9.282    |  1.918    |
+|  3        | -223.1    |  0.136    |  0.3702   |  1.58     |
+|  4        | -2.125e+0 | -0.4184   | -4.554    |  2.186    |
+|  5        | -2.204e+0 |  1.349    |  7.007    |  2.752    |
+|  6        | -9.605e+0 | -0.89     | -7.666    |  2.513    |
+|  7        | -971.5    | -0.2823   | -4.904    |  3.576    |
+|  8        | -4.142e+0 |  1.849    |  1.234    | -3.212    |
+|  9        | -2.08e+04 |  1.311    | -0.1524   |  1.313    |
+|  10       | -2.792e+0 |  1.518    | -0.7792   | -0.0206   |
+|  11       | -0.9271   | -0.000255 | -5.51     | -0.6287   |
+|  12       | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+=============================================================
+ 50%|██████████████████████▌                      | 1/2 [00:05<00:05,  5.12s/it]|   iter    |  target   |  param1   |  param2   |  param3   |
+-------------------------------------------------------------
+|  1        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  2        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  3        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  4        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  5        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  6        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  7        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  8        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  9        | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  10       | -0.9328   | -0.000612 | -5.51     | -0.6267   |
+|  11       | -1.005    | -0.000758 | -5.51     | -0.6276   |
+|  12       | -1.016    |  0.001091 | -5.511    | -0.627    |
+=============================================================
+100%|█████████████████████████████████████████████| 2/2 [00:12<00:00,  5.82s/it]
+$ cat bo_model.save 
+{
+    "target": -0.8306674957275391,
+    "params": {
+        "param1": -0.0005498524015679114,
+        "param2": -5.509954177735216,
+        "param3": -0.6274083582960057
+    }
+}
+$ zworkflow-predict --config bo_workflow.yml ETH-USDT_2019-05-01T01_02_44_2019-05-01T07_02_44.gz.csv
+action
+0.10582758
+0.10584407
+-0.08948298
+-0.040706336
+0.44756153
+-0.040695332
+-0.2848375
+-0.040722832
+-0.2359699
+0.056954436
+-0.1383836
+-0.08949947
+0.105764076
+-0.08950497
+0.0081393095
+0.5451893
+0.30107465
+0.34984028
+0.54510933
+0.5450928
+0.64283365
+0.54510933
+0.7404254
+0.64276457
+0.5451508
+

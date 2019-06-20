@@ -15,18 +15,18 @@ class BayesianOptimizationTrain(TrainBase):
 
         if self.config['train']['load_model']:
             model.load()
-
+        
         dataloader = DataLoader(dataset, batch_size=self.config['train']['batch_size'],
                                 shuffle=True, num_workers=4)
 
-        for i, (X, y) in tqdm(enumerate(dataloader)):
+        for i, (X, y) in tqdm(enumerate(dataloader), total=len(dataloader)):
 
             model.data = X.data.numpy()
             model.target = y.data.numpy()
             optimizer = BayesianOptimization(
                 f=model.optimizable,
                 pbounds=model.pbounds,
-                verbose=2,
+                verbose=2 if self.config['general']['verbose'] else 0,
                 random_state=20,
             )
             model.load_logs(optimizer)

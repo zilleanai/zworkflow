@@ -4,13 +4,13 @@ bayesian_optimization = {
         'verbose': False
     },
     'dataset': {
-        'dataset_class': 'dataset',
+        'dataset_class': 'csv_dataset',
         'dataset_file': 'dataset.py',
         'datapath': '.',
         'type': 'csv'
     },
     'preprocessing': {
-        'preprocessing_class': 'preprocessing',
+        'preprocessing_class': 'csv_preprocessing',
         'preprocessing_file': 'preprocessing.py',
         'functions': []
     },

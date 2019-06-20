@@ -1,0 +1,31 @@
+domain: bayesian_optimization
+dataset:
+  datapath: traindata
+  features:
+    - price
+    - move
+    - ask_price_0
+    - bid_price_0
+  labels:
+    - action
+preprocessing:
+  functions:
+    - move
+model:
+  model_class: model
+  model_file: bo_model.py
+  savepath: bo_model.save
+  params:
+    param1: 1
+    param2: 3
+  param_bounds:
+    param1: [-1, 2]
+    param2: [-10, 10]
+    param3: [-5, 5]
+train:
+  shuffle: true
+  learn_rate: 0.03
+  epochs: 2
+  batch_size: 2500
+  load_model: true
+  device: "cpu"
